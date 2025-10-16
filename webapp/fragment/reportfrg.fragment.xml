@@ -1,0 +1,208 @@
+<core:FragmentDefinition  xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+	 xmlns:f="sap.ui.layout.form"
+    xmlns:f1="sap.f"
+	xmlns:card="sap.f.cards"
+
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:custData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:viz="sap.viz.ui5.controls"  
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:st="sap.ui.comp.smarttable"
+    xmlns:semantic="sap.m.semantic" xmlns:n="sap.ui.comp.navpopover"  xmlns:variant="sap.ui.comp.variants"
+	xmlns:sfb="sap.ui.comp.smartfilterbar" 
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:sv="sap.ui.comp.smartvariants">
+	     	
+    	<VBox>
+
+<st:SmartTable id="smartTable" header="{i18n>HeaderTitle}" entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant" persistencyKey="zfleetadmindash.table"
+				showRowCount="true" 
+				beforeRebindTable="onBeforeRebindTable"  placeToolbarInTable="true"
+				initiallyVisibleFields="week1"
+				ignoreFromPersonalisation=""
+				requestAtLeastFields=""
+				useExportToExcel="false">
+				<st:customToolbar>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://excel-attachment" press="onExport" />
+						</Toolbar>
+				</st:customToolbar>
+				<Table  growing="true" growingThreshold="20" growingScrollToLoad="true" rememberSelections="false"
+					fixedLayout="false" mode="None" >
+					<columns> 	
+					<Column  >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "week1", "columnIndex":1, "leadingProperty": "week1" , "sortProperty": "week1" , "filterProperty": "week1"}' />  
+					</customData>  
+					<Text text="Week"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "month", "columnIndex":2, "leadingProperty": "month" , "sortProperty": "month" , "filterProperty": "month"}' />  
+					</customData>  
+					<Text text="Month"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "week2", "columnIndex":3, "leadingProperty": "week2" , "sortProperty": "week2" , "filterProperty": "week2"}' />  
+					</customData>  
+					<Text text="Week Desc."/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "weekdays", "columnIndex":4, "leadingProperty": "weekdays" , "sortProperty": "weekdays" , "filterProperty": "weekdays"}' />  
+					</customData>  
+					<Text text="Week Days"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "shoporder", "columnIndex":5, "leadingProperty": "shoporder" , "sortProperty": "shoporder" , "filterProperty": "shoporder"}' />  
+					</customData>  
+					<Text text="Shop Order"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "product", "columnIndex":6, "leadingProperty": "product" , "sortProperty": "product" , "filterProperty": "product"}' />  
+					</customData>  
+					<Text text="Product"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdcategory", "columnIndex":7, "leadingProperty": "prdcategory" , "sortProperty": "prdcategory" , "filterProperty": "prdcategory"}' />  
+					</customData>  
+					<Text text="Product Category"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "size", "columnIndex":8, "leadingProperty": "size" , "sortProperty": "size" , "filterProperty": "size"}' />  
+					</customData>  
+					<Text text="Size"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prodsch", "columnIndex":9, "leadingProperty": "prodsch" , "sortProperty": "prodsch" , "filterProperty": "prodsch"}' />  
+					</customData>  
+					<Text text="Production Schedule"/>  
+					</Column>
+					<Column  >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "lotsize", "columnIndex":10, "leadingProperty": "lotsize" , "sortProperty": "lotsize" , "filterProperty": "lotsize"}' />  
+					</customData>  
+					<Text text="IFS Lot size"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "suppwastg", "columnIndex":11, "leadingProperty": "suppwastg" , "sortProperty": "suppwastg" , "filterProperty": "suppwastg"}' />  
+					</customData>  
+					<Text text="% Add including wastages from Supply"/>  
+					</Column>
+					<Column   >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "actmixed", "columnIndex":12, "leadingProperty": "actmixed" , "sortProperty": "actmixed" , "filterProperty": "actmixed"}' />  
+					</customData>  
+					<Text text="Actual Mixed Ltrs"/>  
+					</Column>
+					<Column   >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "actfilled", "columnIndex":13, "leadingProperty": "actfilled" , "sortProperty": "actfilled" , "filterProperty": "actfilled"}' />  
+					</customData>  
+					<Text text="Actual Filled Ltrs"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "caseprd", "columnIndex":14, "leadingProperty": "caseprd" , "sortProperty": "caseprd" , "filterProperty": "caseprd"}' />  
+					</customData>  
+					<Text text="Cases Produced"/>  
+					</Column>
+					<Column >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "schvsfilled", "columnIndex":15, "leadingProperty": "schvsfilled" , "sortProperty": "schvsfilled" , "filterProperty": "schvsfilled"}' />  
+					</customData>  
+					<Text text="% Schedule VS Filled"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "mixvsact", "columnIndex":16, "leadingProperty": "mixvsact" , "sortProperty": "mixvsact" , "filterProperty": "mixvsact"}' />  
+					</customData>  
+					<Text text="% (Mixed Vs Actual)"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "proccplant", "columnIndex":17, "leadingProperty": "proccplant" , "sortProperty": "proccplant" , "filterProperty": "proccplant"}' />  
+					</customData>  
+					<Text text="Process Plant (Work Center)"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdcycle", "columnIndex":18, "leadingProperty": "prdcycle" , "sortProperty": "prdcycle" , "filterProperty": "prdcycle"}' />  
+					</customData>  
+					<Text text="Production cycle/CIP (qty)"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "runningblock", "columnIndex":19, "leadingProperty": "runningblock" , "sortProperty": "runningblock" , "filterProperty": "runningblock"}' />  
+					</customData>  
+					<Text text="Running Block"/>  
+					</Column>
+					<Column  >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "uhtlosslitrs", "columnIndex":20, "leadingProperty": "uhtlosslitrs" , "sortProperty": "uhtlosslitrs" , "filterProperty": "uhtlosslitrs"}' />  
+					</customData>  
+					<Text text="UHT LOSS, liters"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "uhtlossperc", "columnIndex":21, "leadingProperty": "uhtlossperc" , "sortProperty": "uhtlossperc" , "filterProperty": "uhtlossperc"}' />  
+					</customData>  
+					<Text text="UHT LOSS, %"/>  
+					</Column>
+					<Column    >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdlosslitrs", "columnIndex":22, "leadingProperty": "prdlosslitrs" , "sortProperty": "prdlosslitrs" , "filterProperty": "prdlosslitrs"}' />  
+					</customData>  
+					<Text text="Production loss, liters"/>  
+					</Column>
+					<Column  visible="{initialvisible>/flag}" >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdlossperc", "columnIndex":23, "leadingProperty": "prdlossperc" , "sortProperty": "prdlossperc" , "filterProperty": "prdlossperc"}' />  
+					</customData>  
+					<Text text="Production loss, %"/>  
+					</Column> 
+					</columns>
+					<items>
+						<ColumnListItem>
+							<Text text="{path: 'week1'}" />
+						<Text text="{path: 'month'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'week2'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'weekdays', formatter: '.formatWeekdays'}" visible="{initialvisible>/flag}" />
+						<Text text="{path: 'shoporder'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'product'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'prdcategory'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'size'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'prodsch'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'lotsize'}" />
+						<Text text="{path: 'suppwastg'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'actmixed'}" />
+						<Text text="{path: 'actfilled'}" />
+						<Text text="{path: 'caseprd'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'schvsfilled'}" />
+						<Text text="{path: 'mixvsact'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'proccplant'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'prdcycle'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'runningblock'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'uhtlosslitrs'}"  />
+						<Text text="{path: 'uhtlossperc'}" visible="{initialvisible>/flag}"/>
+						<Text text="{path: 'prdlosslitrs'}" />
+						<Text text="{path: 'prdlossperc'}" visible="{initialvisible>/flag}"/>
+						</ColumnListItem>
+					</items> 
+				</Table> 
+			</st:SmartTable>
+</VBox>
+            
+</core:FragmentDefinition>
