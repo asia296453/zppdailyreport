@@ -8,7 +8,9 @@ sap.ui.define([
     "use strict";
     var EdmType = x.EdmType;
     return Controller.extend("zppdailyreport.controller.Report", {
-        onInit() {//week1,month,week2,weekdays,shoporder,product,prdcategory,
+        onInit() {
+            // week1,month,weekdays,shoporder,product,prdcategory,size,prodsch,lotsize,suppwastg,actmixed,actfilled,caseprd,schvsfilled,mixvsact,proccplant,prdcycle,runningblock,uhtlosslitrs,uhtlossperc,prdlosslitrs,prdlossperc
+            //suppwastg,actmixed,actfilled,caseprd,schvsfilled,mixvsact,proccplant,prdcycle,runningblock,uhtlosslitrs,uhtlossperc,prdlosslitrs,prdlossperc
             this.getOwnerComponent().getModel("i18n")._oResourceBundle.aPropertyFiles[0].mProperties.HeaderTitle = 'Overall Report';
             this.getOwnerComponent().getModel("i18n").refresh(true);
             // var sinitvis = "size,prodsch,lotsize,suppwastg,actmixed,actfilled,caseprd,schvsfilled,mixvsact,proccplant,prdcycle,runningblock,uhtlosslitrs,uhtlossperc,prdlosslitrs,prdlossperc";
@@ -16,11 +18,19 @@ sap.ui.define([
             // var sinitvis1 = "recepielosslitrs ,recepielossperc,totallosslitrs,totallossperc,remarks";
             // this.getOwnerComponent().getModel("initialvisible").setProperty("/results1", sinitvis1);
             this.getOwnerComponent().getModel("initialvisible").setProperty("/flag", true);
-            this.getOwnerComponent().getModel("initialvisible").setProperty("/flag1", true);
+            this.getOwnerComponent().getModel("initialvisible").setProperty("/flag1", false);
             this.getOwnerComponent().getModel("initialvisible").refresh(true);
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/Plant","5910");
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/Report","O");
+
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/Material","20000002");
+            this.getOwnerComponent().getModel("LocalModel").setProperty("/Week","28");
         },
         refreshTable: function () {
             this.byId("smartTable").rebindTable();
+        },
+        refreshTable1: function () {
+            this.byId("smartTable1").rebindTable();
         },
         formatcomma: function (e) {
             var sval = e;
@@ -57,53 +67,154 @@ sap.ui.define([
             
             this.getView().getModel("i18n")._oResourceBundle.aPropertyFiles[0].mProperties.HeaderTitle = e.getParameter("selectedItem").getText();
             this.getView().getModel("i18n").refresh(true);
-            this.getView().getModel("initialvisible").setProperty("/flag", true);
-            this.getView().getModel("initialvisible").setProperty("/flag1", true);
+            if (sval === 'O') {
+                this.getView().getModel("initialvisible").setProperty("/flag", true);
+                this.getView().getModel("initialvisible").setProperty("/flag1", false);
+                this.getView().getModel("initialvisible").refresh(true);
+                this.byId("smartTable").rebindTable();
+            } 
             if (sval === 'W') {
                 this.getView().getModel("initialvisible").setProperty("/flag", false);
+                this.getView().getModel("initialvisible").setProperty("/flag1", true);
+                this.getView().getModel("initialvisible").refresh(true);
+                this.byId("smartTable1").rebindTable();
             } 
             if (sval === 'M') {
+                this.getView().getModel("initialvisible").setProperty("/flag", true);
                 this.getView().getModel("initialvisible").setProperty("/flag1", false);
+                this.getView().getModel("initialvisible").refresh(true);
+                this.byId("smartTable").rebindTable();
             } 
+        },
+        buildFiltersForCustomFields: function () {
+                    var oFilterBar = this.getView().byId("fbPreqs");
+                    var aFilters = [];
+                    oFilterBar.getFilterGroupItems().forEach(function (oItem) {
+                        var oControl = oItem.getControl();
+                        var sControlType = oControl.getMetadata().getName();
+        
+                        switch (sControlType) {
+                             case "sap.m.Select":
+                                var sKey1 = oControl.getSelectedKey();
+                                if (sKey1) {
+                                    aFilters.push(new Filter(oItem.getName(), FilterOperator.EQ, sKey1));
+                                }
+                                 break;
+                            case "sap.m.MultiComboBox":
+                                var oKey = oControl.getSelectedKey();
+                               aFilters.push(new Filter(oItem.getName(), FilterOperator.EQ, oKey));
+                                break;
+                            case "sap.m.Input":
+                                var sValue = oControl.getValue();
+                                if (sValue && oItem.getName() !=='Bukrs') {
+                                    aFilters.push(new Filter(oItem.getName(), FilterOperator.EQ, sValue));
+                                }
+        
+                                break;
+                            case "sap.m.ComboBox":
+                                var sKey = oControl.getSelectedKey();
+                                if (sKey) {
+                                    aFilters.push(new Filter(oItem.getName(), FilterOperator.EQ, sKey));
+                                }
+        
+                                break;
+                            case "sap.m.MultiInput":
+                                var ovl = [];
+                                var sfilterval = '';
+                                if(oControl.getProperty("value") !== ''){
+                                    var ovl = oControl.getProperty("value").split(",");
+                                   for(var i = 0 ; i< ovl.length ; i++){                                    
+                                    aFilters.push(new Filter(oControl.mBindingInfos.value.parts[0].path.split("/")[1], FilterOperator.EQ, ovl[i].trim()));
+                                   }
+                                } 
+                                break;
+        
+                            case "sap.m.DateRangeSelection":
+                                var oDateFrom = oControl.getDateValue();
+                                var oDateTo = oControl.getSecondDateValue();
+                                if(oDateFrom !== null && oDateTo !== null){
+                                    aFilters.push(new Filter(oItem.getName(), FilterOperator.EQ,this.formatDate(oDateFrom)));
+                                    aFilters.push(new Filter(oItem.getName(), FilterOperator.EQ,this.formatDate(oDateTo)));
+                                }
+                               
+        
+                                break;
+                        }
+                    }.bind(this));
+                    return aFilters;
+                },
+                onClearFilterBar: function (oEvent) {
+                    var oFilterBar = this.getView().byId("fbPreqs");
+                    oFilterBar.getFilterGroupItems().forEach(function (oItem) {
+                        var oControl = oItem.getControl();
+                        switch (oControl.getMetadata().getName()) {
+                            case "sap.m.Input": oControl.setValue("");
+                                break;
+                            case "sap.m.DateRangeSelection": oControl.setDateValue(null);
+                                oControl.setSecondDateValue(null);
+                                break;
+                            case "sap.m.MultiInput":oControl.setValue("");
+                                break;
+                            case "sap.m.ComboBox": oControl.setSelectedKey("");
+                                break;
+                            case "sap.m.MultiComboBox": oControl.setSelectedKeys("");
+                                break;
+                                 case "sap.m.Select": oControl.setSelectedKey("");
+                                break;
+                        }
+                    });
+                },
 
-            this.getView().getModel("initialvisible").refresh(true);
-            this.byId("smartTable").rebindTable();
+        onBeforeRebindTable1: function (oEvent) {
+            var oBindingParams = oEvent.getParameter("bindingParams");
+            var aFilters = this.buildFiltersForCustomFields();
+            var aStandardFilters = oBindingParams.filters;
+
         },
 
-        onBeforeRebindTable: function(oEvent){
+        onBeforeRebindTable: function (oEvent) {
             var oBindingParams = oEvent.getParameter("bindingParams");
-            oBindingParams.parameters = oBindingParams.parameters || {};
+            var aFilters = this.buildFiltersForCustomFields();
+            var aStandardFilters = oBindingParams.filters;
+
+        // var oBindingParams = oEvent.getParameter("bindingParams");
+            // oBindingParams.parameters = oBindingParams.parameters || {};
                             
-            var oSmartTable = oEvent.getSource();
-            var oSmartFilterBar = this.byId(oSmartTable.getSmartFilterId());
-            var vCategory;
-            if (oSmartFilterBar instanceof sap.ui.comp.smartfilterbar.SmartFilterBar) {
-                //Custom price filter
-                var oCustomControl = oSmartFilterBar.getControlByKey("Report");
-                if (oCustomControl instanceof sap.m.Select) {
-                    vCategory = oCustomControl.getSelectedKey();
-                    switch (vCategory) {
-                        case "W":
-                            oBindingParams.filters.push(new sap.ui.model.Filter("Report",sap.ui.model.FilterOperator.EQ, "W"));
-                            break;
-                        case "M":
-                            oBindingParams.filters.push(new sap.ui.model.Filter("Report",sap.ui.model.FilterOperator.EQ, "M"));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
+            // var oSmartTable = oEvent.getSource();
+            // var oSmartFilterBar = this.byId(oSmartTable.getSmartFilterId());
+            // var vCategory;
+            // if (oSmartFilterBar instanceof sap.ui.comp.smartfilterbar.SmartFilterBar) {
+            //     //Custom price filter
+            //     var oCustomControl = oSmartFilterBar.getControlByKey("Report");
+            //     if (oCustomControl instanceof sap.m.Select) {
+            //         vCategory = oCustomControl.getSelectedKey();
+            //         switch (vCategory) {
+            //             case "W":
+            //                 oBindingParams.filters.push(new sap.ui.model.Filter("Report",sap.ui.model.FilterOperator.EQ, "W"));
+            //                 break;
+            //             case "M":
+            //                 oBindingParams.filters.push(new sap.ui.model.Filter("Report",sap.ui.model.FilterOperator.EQ, "M"));
+            //                 break;
+            //             default:
+            //                 break;
+            //         }
+            //     }
+            // }
         },
          onExport: function (OEvt) {
-            var ofilters=this.getView().byId("smartFilterBar").getFilters()[0].aFilters;
+            var ofilters = this.buildFiltersForCustomFields();
+            
             this.getOdata("/HeaderSet", "ReportModel", ofilters).then((res) => {
               
             var aCols,
                 aData,
                 oSettings;
-
-            aCols = this.createColumnConfig();
+            
+            if(this.getOwnerComponent().getModel("LocalModel").getProperty("/Report") === 'W'){
+                aCols = this.createColumnConfigW();
+            }else{                
+                 aCols = this.createColumnConfig();
+            }
             aData = res;
             debugger;
             var sid = this.getView().byId("customSelect").getSelectedItem().getProperty("text");
@@ -121,32 +232,44 @@ sap.ui.define([
 
             });
         },
-         createColumnConfig: function () {
-            var selectedColumns = this.getView().byId("smartTable")._oTable.getBindingInfo("items").parameters.select;
-            var tablemetadata = this.getModel().getServiceMetadata().dataServices.schema[0].entityType;
-            var selectedCol = selectedColumns.split(",");
-            var seldata = [], selcolumn = [];
-            var sentity = [];
-            tablemetadata.forEach(function (ent) {
-                if (ent.name === "Header") {
-                    sentity = ent.property;
-                }
-            });
-            selectedCol.forEach(function (oItem) {
-                var selCurrRow = sentity.filter(function (el) {
-                    return el.name == oItem;
-                }.bind(this));
-                if (selCurrRow.length > 0) {
-                    var sdt = {
-                        "label": selCurrRow[0].extensions[1].value,
-                        "property": selCurrRow[0].name
-                    }
-                    seldata.push(sdt);
-                }
+        createColumnConfig: function () {
+            return [
+                { property: "week1", label: "Week" },
+                { property: "month", label: "Month" },
+                { property: "weekdays", label: "Week Days" },
+                { property: "shoporder", label: "Shop Order" },
+                { property: "product", label: "Product" },
+                { property: "prdcategory", label: "Product Category" },
+                { property: "size", label: "Size" },
+                { property: "prodsch", label: "Production Schedule" },
+                { property: "lotsize", label: "IFS Lot size" },
+                { property: "suppwastg", label: "% Add including wastages from Supply" },
+                { property: "actmixed", label: "ACTUAL MIXED LTRS" },
+                { property: "actfilled", label: "ACTUAL FILLED LTRS" },
+                { property: "caseprd", label: "CASES PRODUCED" },
+                { property: "schvsfilled", label: "% SCHEDULE VS FILLED" },
+                { property: "mixvsact", label: "% (Mixed Vs Actual)" },
+                { property: "proccplant", label: "PROCESS PLANT (Work Center)" },
+                { property: "prdcycle", label: "Production cycle/CIP (qty)" },
+                { property: "runningblock", label: "RUNNING BLOCK" },
+                { property: "uhtlosslitrs", label: "UHT LOSS, liters" },
+                { property: "uhtlossperc", label: "UHT LOSS, %" },
+                { property: "prdlosslitrs", label: "Production loss, %" },
+                { property: "prdlossperc", label: "Production loss, liters" }
 
-            });
+            ];
+        },
 
-           return seldata;
+         createColumnConfigW: function () {
+            return [
+                    { property: "week1"	, label:	"WEEK"	},
+                    { property: "lotsize"	, label:	"IFS Lot size"	},				
+                    { property: "actmixed"	, label:	"ACTUAL MIXED LTRS"	},
+                    { property: "actfilled"	, label:	"ACTUAL FILLED LTRS"	},				
+                    { property: "schvsfilled"	, label:	"% SCHEDULE VS FILLED"	},				
+                    { property: "uhtlosslitrs"	, label:	"UHT LOSS, liters"	},				
+                    { property: "prdlosslitrs"	, label:	"Production loss, %"	}
+            ];
         },
           getModel: function (e) {
                 return this.getView().getModel(e)
@@ -172,6 +295,113 @@ sap.ui.define([
                 return this.getOwnerComponent().getModel("i18n").getResourceBundle()
             },
 
+            handleValueHelpSearchPlantF4: function (evt) {
+                    var sValue = evt.getParameter("value");
+                    var oFilter = new Filter("Werks", sap.ui.model.FilterOperator.EQ, sValue);
+                    evt.getSource().getBinding("items").filter([oFilter]);
+                },
+
+        handleValueHelpSearchMaterial: function (evt) {
+                    var sValue = evt.getParameter("value");
+                    var oFilter = new Filter("Matnr", sap.ui.model.FilterOperator.EQ, sValue);
+                    evt.getSource().getBinding("items").filter([oFilter]);
+                },
+
+         handleValueHelpSearchWeek: function (evt) {
+                    var sValue = evt.getParameter("value");
+                    var oFilter = new Filter("Zweek", sap.ui.model.FilterOperator.EQ, sValue);
+                    evt.getSource().getBinding("items").filter([oFilter]);
+                },
+
+        handleValueHelpConfPlantF4: function (evt) {
+                    var aContexts = evt.getParameter("selectedContexts");
+                    if (aContexts && aContexts.length) {
+                        var oval = aContexts.map(function (oContext) {
+                            return oContext.getObject().Werks;
+                        }).join(", ");
+                       
+                        this.getView().getModel("LocalModel").setProperty("/Plant", oval);
+                        this.getView().getModel("LocalModel").refresh(true);
+                    }
+                    evt.getSource().getBinding("items").filter([]);
+                },
+
+         handleValueHelpConfMaterial: function (evt) {
+                    var aContexts = evt.getParameter("selectedContexts");
+                    if (aContexts && aContexts.length) {
+                        var oval = aContexts.map(function (oContext) {
+                            return oContext.getObject().Matnr;
+                        }).join(", ");
+                       
+                        this.getView().getModel("LocalModel").setProperty("/Matnr", oval);
+                        this.getView().getModel("LocalModel").refresh(true);
+                    }
+                    evt.getSource().getBinding("items").filter([]);
+                },
+
+         handleValueHelpConfWeek: function (evt) {
+                    var aContexts = evt.getParameter("selectedContexts");
+                    if (aContexts && aContexts.length) {
+                        var oval = aContexts.map(function (oContext) {
+                            return oContext.getObject().Zweek;
+                        }).join(", ");
+                       
+                        this.getView().getModel("LocalModel").setProperty("/Zweek", oval);
+                        this.getView().getModel("LocalModel").refresh(true);
+                    }
+                    evt.getSource().getBinding("items").filter([]);
+                },
+
+            onOpenPlant: function (oEvent) {
+                    this.Plantf4 = null;
+                    if (!this.Plantf4) {
+                        this.Plantf4 = sap.ui.xmlfragment("zppdailyreport.fragment.Plant", this);
+                        this.getView().addDependent(this.Plantf4);
+                    };
+                    this.Plantf4.open();
+                },
+
+        onOpenMaterial: function (oEvent) {
+                    this.Materialf4 = null;
+                    if (!this.Materialf4) {
+                        this.Materialf4 = sap.ui.xmlfragment("zppdailyreport.fragment.Material", this);
+                        this.getView().addDependent(this.Materialf4);
+                    };
+                    this.Materialf4.open();
+                },
+
+      onOpenWeek: function (oEvent) {
+                    this.Weekf4 = null;
+                    if (!this.Weekf4) {
+                        this.Weekf4 = sap.ui.xmlfragment("zppdailyreport.fragment.Week", this);
+                        this.getView().addDependent(this.Weekf4);
+                    };
+                    this.Weekf4.open();
+                },
+
+                onSearch: function (oEvent) { // Fetch a list of filters to apply to the worklist:
+                    var sval = this.getOwnerComponent().getModel("LocalModel").getProperty("/Report");
+                    debugger;
+                    if (sval === 'O') {
+                            this.getView().getModel("initialvisible").setProperty("/flag", true);
+                            this.getView().getModel("initialvisible").setProperty("/flag1", false);
+                            this.getView().getModel("initialvisible").refresh(true);
+                            this.byId("smartTable").rebindTable();
+                        } 
+                        if (sval === 'W') {
+                            this.getView().getModel("initialvisible").setProperty("/flag", false);
+                            this.getView().getModel("initialvisible").setProperty("/flag1", true);
+                            this.getView().getModel("initialvisible").refresh(true);
+                            this.byId("smartTable1").rebindTable();
+                        } 
+                        if (sval === 'M') {
+                            this.getView().getModel("initialvisible").setProperty("/flag", true);
+                            this.getView().getModel("initialvisible").setProperty("/flag1", false);
+                            this.getView().getModel("initialvisible").refresh(true);
+                            this.byId("smartTable").rebindTable();
+                        } 
+                                
+                },
              getOdata: function (surl, smodelname, ofilter, stype) {
             return new Promise((resolve, reject) => {
             if (ofilter === null) {

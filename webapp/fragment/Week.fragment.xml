@@ -1,0 +1,17 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog multiSelect="true"
+		title="Week"
+		class="sapUiPopupWithPadding"
+		items="{/WeekF4Set}"
+		search="handleValueHelpSearchWeek"
+		confirm="handleValueHelpConfWeek"
+		cancel="handleValueHelpClose" growingThreshold="true" growing="true" >
+		<StandardListItem
+			title="{Zweek}"
+		    description="{Zyear}" 
+			info="{Zdatefr} - {Zdateto}"
+			/>
+	</SelectDialog>
+</core:FragmentDefinition>

@@ -19,7 +19,7 @@
 	     	
     	<VBox>
 
-<st:SmartTable id="smartTable" header="{i18n>HeaderTitle}" entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant" persistencyKey="zfleetadmindash.table"
+<st:SmartTable id="smartTable1234" header="{i18n>HeaderTitle}" entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant" persistencyKey="zfleetadmindash.table"
 				showRowCount="true" 
 				beforeRebindTable="onBeforeRebindTable"  placeToolbarInTable="true"
 				initiallyVisibleFields="week1"

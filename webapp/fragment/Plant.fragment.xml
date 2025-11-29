@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog multiSelect="true"
+		title="Plant"
+		class="sapUiPopupWithPadding"
+		items="{/PlantF4Set}"
+		search="handleValueHelpSearchPlantF4"
+		confirm="handleValueHelpConfPlantF4"
+		cancel="handleValueHelpClose" growingThreshold="true" growing="true" >
+		<StandardListItem
+			title="{Werks}"
+		    description="{Name1}" 
+			/>
+	</SelectDialog>
+</core:FragmentDefinition>

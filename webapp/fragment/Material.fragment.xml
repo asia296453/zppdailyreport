@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog multiSelect="true"
+		title="Material"
+		class="sapUiPopupWithPadding"
+		items="{/MaterialF4Set}"
+		search="handleValueHelpSearchMaterial"
+		confirm="handleValueHelpConfMaterial"
+		cancel="handleValueHelpClose" growingThreshold="true" growing="true" >
+		<StandardListItem
+			title="{Matnr}"
+		    description="{Maktx}" 
+			/>
+	</SelectDialog>
+</core:FragmentDefinition>

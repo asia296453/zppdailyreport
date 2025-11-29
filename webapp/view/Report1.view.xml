@@ -44,7 +44,7 @@
 						</sfb:controlConfiguration>
 				</sfb:SmartFilterBar>
 				
-				<st:SmartTable id="smartTable" header="{i18n>HeaderTitle}" entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant" persistencyKey="zfleetadmindash.table"
+				<st:SmartTable id="smartTable123" header="{i18n>HeaderTitle}" entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant" persistencyKey="zfleetadmindash.table"
 				showRowCount="true" 
 				beforeRebindTable="onBeforeRebindTable"  placeToolbarInTable="true"
 				initiallyVisibleFields="week1,month,week2,weekdays,shoporder,product,prdcategory,size,prodsch,lotsize,suppwastg,actmixed,actfilled,caseprd,schvsfilled,mixvsact,proccplant,prdcycle,runningblock,uhtlosslitrs,uhtlossperc,prdlosslitrs,prdlossperc"
@@ -61,148 +61,148 @@
 				 <m:Table  growing="true" growingThreshold="20" growingScrollToLoad="true" rememberSelections="false"
 					fixedLayout="false" mode="None" >
 					<m:columns> 	
-					<m:Column  >
+					<m:Column  visible="{initialvisible>/flag1}">
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "week1", columnIndex:1, "leadingProperty": "week1" , "sortProperty": "week1" , "filterProperty": "week1"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "week1", "columnIndex":1, "leadingProperty": "week1" , "sortProperty": "week1" , "filterProperty": "week1"}' />  
 					</m:customData>  
 					<m:Text text="Week"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "month", columnIndex:2, "leadingProperty": "month" , "sortProperty": "month" , "filterProperty": "month"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "month", "columnIndex":2, "leadingProperty": "month" , "sortProperty": "month" , "filterProperty": "month"}' />  
 					</m:customData>  
 					<m:Text text="Month"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "week2", columnIndex:3, "leadingProperty": "week2" , "sortProperty": "week2" , "filterProperty": "week2"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "week2", "columnIndex":3, "leadingProperty": "week2" , "sortProperty": "week2" , "filterProperty": "week2"}' />  
 					</m:customData>  
 					<m:Text text="Week Desc."/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "weekdays", columnIndex:4, "leadingProperty": "weekdays" , "sortProperty": "weekdays" , "filterProperty": "weekdays"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "weekdays", "columnIndex":4, "leadingProperty": "weekdays" , "sortProperty": "weekdays" , "filterProperty": "weekdays"}' />  
 					</m:customData>  
 					<m:Text text="Week Days"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "shoporder", columnIndex:5, "leadingProperty": "shoporder" , "sortProperty": "shoporder" , "filterProperty": "shoporder"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "shoporder", "columnIndex":5, "leadingProperty": "shoporder" , "sortProperty": "shoporder" , "filterProperty": "shoporder"}' />  
 					</m:customData>  
 					<m:Text text="Shop Order"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "product", columnIndex:6, "leadingProperty": "product" , "sortProperty": "product" , "filterProperty": "product"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "product", "columnIndex":6, "leadingProperty": "product" , "sortProperty": "product" , "filterProperty": "product"}' />  
 					</m:customData>  
 					<m:Text text="Product"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "prdcategory", columnIndex:7, "leadingProperty": "prdcategory" , "sortProperty": "prdcategory" , "filterProperty": "prdcategory"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdcategory", "columnIndex":7, "leadingProperty": "prdcategory" , "sortProperty": "prdcategory" , "filterProperty": "prdcategory"}' />  
 					</m:customData>  
 					<m:Text text="Product Category"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "size", columnIndex:8, "leadingProperty": "size" , "sortProperty": "size" , "filterProperty": "size"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "size", "columnIndex":8, "leadingProperty": "size" , "sortProperty": "size" , "filterProperty": "size"}' />  
 					</m:customData>  
 					<m:Text text="Size"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "prodsch", columnIndex:9, "leadingProperty": "prodsch" , "sortProperty": "prodsch" , "filterProperty": "prodsch"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prodsch", "columnIndex":9, "leadingProperty": "prodsch" , "sortProperty": "prodsch" , "filterProperty": "prodsch"}' />  
 					</m:customData>  
 					<m:Text text="Production Schedule"/>  
 					</m:Column>
 					<m:Column  >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "lotsize", columnIndex:10, "leadingProperty": "lotsize" , "sortProperty": "lotsize" , "filterProperty": "lotsize"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "lotsize", "columnIndex":10, "leadingProperty": "lotsize" , "sortProperty": "lotsize" , "filterProperty": "lotsize"}' />  
 					</m:customData>  
 					<m:Text text="IFS Lot size"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "suppwastg", columnIndex:11, "leadingProperty": "suppwastg" , "sortProperty": "suppwastg" , "filterProperty": "suppwastg"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "suppwastg", "columnIndex":11, "leadingProperty": "suppwastg" , "sortProperty": "suppwastg" , "filterProperty": "suppwastg"}' />  
 					</m:customData>  
 					<m:Text text="% Add including wastages from Supply"/>  
 					</m:Column>
 					<m:Column   >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "actmixed", columnIndex:12, "leadingProperty": "actmixed" , "sortProperty": "actmixed" , "filterProperty": "actmixed"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "actmixed", "columnIndex":12, "leadingProperty": "actmixed" , "sortProperty": "actmixed" , "filterProperty": "actmixed"}' />  
 					</m:customData>  
 					<m:Text text="Actual Mixed Ltrs"/>  
 					</m:Column>
 					<m:Column   >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "actfilled", columnIndex:13, "leadingProperty": "actfilled" , "sortProperty": "actfilled" , "filterProperty": "actfilled"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "actfilled", "columnIndex":13, "leadingProperty": "actfilled" , "sortProperty": "actfilled" , "filterProperty": "actfilled"}' />  
 					</m:customData>  
 					<m:Text text="Actual Filled Ltrs"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "caseprd", columnIndex:14, "leadingProperty": "caseprd" , "sortProperty": "caseprd" , "filterProperty": "caseprd"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "caseprd", "columnIndex":14, "leadingProperty": "caseprd" , "sortProperty": "caseprd" , "filterProperty": "caseprd"}' />  
 					</m:customData>  
 					<m:Text text="Cases Produced"/>  
 					</m:Column>
 					<m:Column >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "schvsfilled", columnIndex:15, "leadingProperty": "schvsfilled" , "sortProperty": "schvsfilled" , "filterProperty": "schvsfilled"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "schvsfilled", "columnIndex":15, "leadingProperty": "schvsfilled" , "sortProperty": "schvsfilled" , "filterProperty": "schvsfilled"}' />  
 					</m:customData>  
 					<m:Text text="% Schedule VS Filled"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "mixvsact", columnIndex:16, "leadingProperty": "mixvsact" , "sortProperty": "mixvsact" , "filterProperty": "mixvsact"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "mixvsact", "columnIndex":16, "leadingProperty": "mixvsact" , "sortProperty": "mixvsact" , "filterProperty": "mixvsact"}' />  
 					</m:customData>  
 					<m:Text text="% (Mixed Vs Actual)"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "proccplant", columnIndex:17, "leadingProperty": "proccplant" , "sortProperty": "proccplant" , "filterProperty": "proccplant"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "proccplant", "columnIndex":17, "leadingProperty": "proccplant" , "sortProperty": "proccplant" , "filterProperty": "proccplant"}' />  
 					</m:customData>  
 					<m:Text text="Process Plant (Work Center)"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "prdcycle", columnIndex:18, "leadingProperty": "prdcycle" , "sortProperty": "prdcycle" , "filterProperty": "prdcycle"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdcycle", "columnIndex":18, "leadingProperty": "prdcycle" , "sortProperty": "prdcycle" , "filterProperty": "prdcycle"}' />  
 					</m:customData>  
 					<m:Text text="Production cycle/CIP (qty)"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "runningblock", columnIndex:19, "leadingProperty": "runningblock" , "sortProperty": "runningblock" , "filterProperty": "runningblock"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "runningblock", "columnIndex":19, "leadingProperty": "runningblock" , "sortProperty": "runningblock" , "filterProperty": "runningblock"}' />  
 					</m:customData>  
 					<m:Text text="Running Block"/>  
 					</m:Column>
 					<m:Column  >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "uhtlosslitrs", columnIndex:20, "leadingProperty": "uhtlosslitrs" , "sortProperty": "uhtlosslitrs" , "filterProperty": "uhtlosslitrs"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "uhtlosslitrs", "columnIndex":20, "leadingProperty": "uhtlosslitrs" , "sortProperty": "uhtlosslitrs" , "filterProperty": "uhtlosslitrs"}' />  
 					</m:customData>  
 					<m:Text text="UHT LOSS, liters"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "uhtlossperc", columnIndex:21, "leadingProperty": "uhtlossperc" , "sortProperty": "uhtlossperc" , "filterProperty": "uhtlossperc"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "uhtlossperc", "columnIndex":21, "leadingProperty": "uhtlossperc" , "sortProperty": "uhtlossperc" , "filterProperty": "uhtlossperc"}' />  
 					</m:customData>  
 					<m:Text text="UHT LOSS, %"/>  
 					</m:Column>
 					<m:Column    >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "prdlosslitrs", columnIndex:22, "leadingProperty": "prdlosslitrs" , "sortProperty": "prdlosslitrs" , "filterProperty": "prdlosslitrs"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdlosslitrs", "columnIndex":22, "leadingProperty": "prdlosslitrs" , "sortProperty": "prdlosslitrs" , "filterProperty": "prdlosslitrs"}' />  
 					</m:customData>  
 					<m:Text text="Production loss, liters"/>  
 					</m:Column>
 					<m:Column  visible="{initialvisible>/flag}" >
 					<m:customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "prdlossperc", columnIndex:23, "leadingProperty": "prdlossperc" , "sortProperty": "prdlossperc" , "filterProperty": "prdlossperc"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdlossperc", "columnIndex":23, "leadingProperty": "prdlossperc" , "sortProperty": "prdlossperc" , "filterProperty": "prdlossperc"}' />  
 					</m:customData>  
 					<m:Text text="Production loss, %"/>  
 					</m:Column> 
 					</m:columns>
 					<m:items>
 						<m:ColumnListItem>
-							<m:Text text="{path: 'week1'}" />
+						<m:Text text="{path: 'week1'}" visible="{initialvisible>/flag1}"/>
 						<m:Text text="{path: 'month'}" visible="{initialvisible>/flag}"/>
 						<m:Text text="{path: 'week2'}" visible="{initialvisible>/flag}"/>
 						<m:Text text="{path: 'weekdays', formatter: '.formatWeekdays'}" visible="{initialvisible>/flag}" />
@@ -218,9 +218,9 @@
 						<m:Text text="{path: 'caseprd'}" visible="{initialvisible>/flag}"/>
 						<m:Text text="{path: 'schvsfilled'}" />
 						<m:Text text="{path: 'mixvsact'}" visible="{initialvisible>/flag}"/>
-						<m:Text text="{path: 'proccplant'}" visible="{initialvisible>/flag}"/>
+						<m:Text text="{path: 'proccplant', formatter: '.formatcomma'}" visible="{initialvisible>/flag}" />
 						<m:Text text="{path: 'prdcycle'}" visible="{initialvisible>/flag}"/>
-						<m:Text text="{path: 'runningblock'}" visible="{initialvisible>/flag}"/>
+						<m:Text text="{path: 'runningblock', formatter: '.formatcomma'}" visible="{initialvisible>/flag}" />
 						<m:Text text="{path: 'uhtlosslitrs'}"  />
 						<m:Text text="{path: 'uhtlossperc'}" visible="{initialvisible>/flag}"/>
 						<m:Text text="{path: 'prdlosslitrs'}" />

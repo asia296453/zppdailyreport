@@ -20,6 +20,7 @@ sap.ui.define([
             this.setModel(models.createDeviceModel(), "device");
             this.setModel(new sap.ui.model.json.JSONModel(), "initialvisible");
             this.setModel(new sap.ui.model.json.JSONModel(), "ReportModel");
+            this.setModel(new sap.ui.model.json.JSONModel(), "LocalModel");
             // enable routing
             this.getRouter().initialize();
         }
