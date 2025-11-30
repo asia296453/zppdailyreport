@@ -23,8 +23,8 @@ sap.ui.define([
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Plant","5910");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Report","O");
 
-            this.getOwnerComponent().getModel("LocalModel").setProperty("/Material","20000002");
-            this.getOwnerComponent().getModel("LocalModel").setProperty("/Week","28");
+            // this.getOwnerComponent().getModel("LocalModel").setProperty("/Material","20000002");
+            // this.getOwnerComponent().getModel("LocalModel").setProperty("/Week","28");
         },
         refreshTable: function () {
             this.byId("smartTable").rebindTable();
@@ -169,6 +169,7 @@ sap.ui.define([
             var oBindingParams = oEvent.getParameter("bindingParams");
             var aFilters = this.buildFiltersForCustomFields();
             var aStandardFilters = oBindingParams.filters;
+            oBindingParams.filters = aFilters;
 
         },
 
@@ -176,6 +177,7 @@ sap.ui.define([
             var oBindingParams = oEvent.getParameter("bindingParams");
             var aFilters = this.buildFiltersForCustomFields();
             var aStandardFilters = oBindingParams.filters;
+            oBindingParams.filters = aFilters;
 
         // var oBindingParams = oEvent.getParameter("bindingParams");
             // oBindingParams.parameters = oBindingParams.parameters || {};

@@ -21,6 +21,6 @@ builder:
           name: ZPP_DAILYREPORT
           description: Daily
           package: ZFIORI
-          transport: RD4K900543
+          transport: RD4K900531
         exclude:
           - /test/
