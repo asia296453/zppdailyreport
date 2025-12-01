@@ -20,11 +20,33 @@ sap.ui.define([
             this.getOwnerComponent().getModel("initialvisible").setProperty("/flag", true);
             this.getOwnerComponent().getModel("initialvisible").setProperty("/flag1", false);
             this.getOwnerComponent().getModel("initialvisible").refresh(true);
+
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Plant","5910");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Report","O");
 
+            this.getOwnerComponent().getModel("monthflag").setProperty("/flag", false);
+            this.getOwnerComponent().getModel("monthflag").setProperty("/flag1", false);
+            this.getOwnerComponent().getModel("monthflag").refresh(true);
+            this.setmonth();
             // this.getOwnerComponent().getModel("LocalModel").setProperty("/Material","20000002");
             // this.getOwnerComponent().getModel("LocalModel").setProperty("/Week","28");
+        },
+        setmonth:function(){
+            var omonth = [{"month":"January","key":"01"},
+                {"month":"February","key":"02"},
+                {"month":"March","key":"03"},
+                {"month":"April","key":"04"},
+                {"month":"May","key":"05"},
+                {"month":"June","key":"06"},
+                {"month":"July","key":"07"},
+                {"month":"August","key":"08"},
+                {"month":"September","key":"09"},
+                {"month":"October","key":"10"},
+                {"month":"November","key":"11"},
+                {"month":"December","key":"12"}];
+            
+            this.getOwnerComponent().getModel("month").setProperty("/results", omonth);
+            this.getOwnerComponent().getModel("month").refresh(true);
         },
         refreshTable: function () {
             this.byId("smartTable").rebindTable();
@@ -64,27 +86,46 @@ sap.ui.define([
             // }
             var sval = e.getParameter("selectedItem").getKey();
             //this.getView().byId("smartFilterBar").getFilters()[0].aFilters.push(new sap.ui.model.Filter("Report", sap.ui.model.FilterOperator.EQ, sval));
-            
+
             this.getView().getModel("i18n")._oResourceBundle.aPropertyFiles[0].mProperties.HeaderTitle = e.getParameter("selectedItem").getText();
             this.getView().getModel("i18n").refresh(true);
             if (sval === 'O') {
                 this.getView().getModel("initialvisible").setProperty("/flag", true);
                 this.getView().getModel("initialvisible").setProperty("/flag1", false);
                 this.getView().getModel("initialvisible").refresh(true);
+
+                this.getOwnerComponent().getModel("monthflag").setProperty("/flag", false);
+                this.getOwnerComponent().getModel("monthflag").setProperty("/flag1", false);
+                this.getOwnerComponent().getModel("monthflag").refresh(true);
                 this.byId("smartTable").rebindTable();
-            } 
+            }
             if (sval === 'W') {
                 this.getView().getModel("initialvisible").setProperty("/flag", false);
                 this.getView().getModel("initialvisible").setProperty("/flag1", true);
                 this.getView().getModel("initialvisible").refresh(true);
+
+                this.getOwnerComponent().getModel("monthflag").setProperty("/flag", false);
+                this.getOwnerComponent().getModel("monthflag").setProperty("/flag1", true);
+                this.getOwnerComponent().getModel("monthflag").refresh(true);
                 this.byId("smartTable1").rebindTable();
-            } 
+            }
             if (sval === 'M') {
-                this.getView().getModel("initialvisible").setProperty("/flag", true);
-                this.getView().getModel("initialvisible").setProperty("/flag1", false);
-                this.getView().getModel("initialvisible").refresh(true);
-                this.byId("smartTable").rebindTable();
-            } 
+                if (this.getView().getModel("LocalModel").getData().month !== null
+                    && this.getView().getModel("LocalModel").getData().month !== ''
+                    && this.getView().getModel("LocalModel").getData().month !== undefined) {
+                    this.getView().getModel("initialvisible").setProperty("/flag", false);
+                    this.getView().getModel("initialvisible").setProperty("/flag1", true);
+                    this.getView().getModel("initialvisible").refresh(true);
+
+                    this.getOwnerComponent().getModel("monthflag").setProperty("/flag", true);
+                    this.getOwnerComponent().getModel("monthflag").setProperty("/flag1", false);
+                    this.getOwnerComponent().getModel("monthflag").refresh(true);
+                    this.byId("smartTable1").rebindTable();
+                } else {
+                    sap.m.MessageBox.error("Month is mandatory");
+                    return;
+                }
+            }
         },
         buildFiltersForCustomFields: function () {
                     var oFilterBar = this.getView().byId("fbPreqs");
@@ -212,10 +253,10 @@ sap.ui.define([
                 aData,
                 oSettings;
             
-            if(this.getOwnerComponent().getModel("LocalModel").getProperty("/Report") === 'W'){
-                aCols = this.createColumnConfigW();
+            if(this.getOwnerComponent().getModel("LocalModel").getProperty("/Report") === 'O'){
+                aCols = this.createColumnConfig();
             }else{                
-                 aCols = this.createColumnConfig();
+                 aCols = this.createColumnConfigW();
             }
             aData = res;
             debugger;
@@ -328,6 +369,19 @@ sap.ui.define([
                     evt.getSource().getBinding("items").filter([]);
                 },
 
+
+                handleValueHelpConfmonth: function (evt) {
+                    var aContexts = evt.getParameter("selectedContexts");
+                    if (aContexts && aContexts.length) {
+                        var oval = aContexts.map(function (oContext) {
+                            return oContext.getObject().key;
+                        }).join(", ");
+                       
+                        this.getView().getModel("LocalModel").setProperty("/month", oval);
+                        this.getView().getModel("LocalModel").refresh(true);
+                    }
+                    evt.getSource().getBinding("items").filter([]);
+                },
          handleValueHelpConfMaterial: function (evt) {
                     var aContexts = evt.getParameter("selectedContexts");
                     if (aContexts && aContexts.length) {
@@ -335,7 +389,7 @@ sap.ui.define([
                             return oContext.getObject().Matnr;
                         }).join(", ");
                        
-                        this.getView().getModel("LocalModel").setProperty("/Matnr", oval);
+                        this.getView().getModel("LocalModel").setProperty("/Material", oval);
                         this.getView().getModel("LocalModel").refresh(true);
                     }
                     evt.getSource().getBinding("items").filter([]);
@@ -348,12 +402,19 @@ sap.ui.define([
                             return oContext.getObject().Zweek;
                         }).join(", ");
                        
-                        this.getView().getModel("LocalModel").setProperty("/Zweek", oval);
+                        this.getView().getModel("LocalModel").setProperty("/Week", oval);
                         this.getView().getModel("LocalModel").refresh(true);
                     }
                     evt.getSource().getBinding("items").filter([]);
                 },
-
+            onOpenmonth: function (oEvent) {
+                    this.monthf4 = null;
+                    if (!this.monthf4) {
+                        this.monthf4 = sap.ui.xmlfragment("zppdailyreport.fragment.month", this);
+                        this.getView().addDependent(this.monthf4);
+                    };
+                    this.monthf4.open();
+                },
             onOpenPlant: function (oEvent) {
                     this.Plantf4 = null;
                     if (!this.Plantf4) {
@@ -385,24 +446,45 @@ sap.ui.define([
                     var sval = this.getOwnerComponent().getModel("LocalModel").getProperty("/Report");
                     debugger;
                     if (sval === 'O') {
-                            this.getView().getModel("initialvisible").setProperty("/flag", true);
-                            this.getView().getModel("initialvisible").setProperty("/flag1", false);
-                            this.getView().getModel("initialvisible").refresh(true);
-                            this.byId("smartTable").rebindTable();
-                        } 
-                        if (sval === 'W') {
+                        this.getView().getModel("initialvisible").setProperty("/flag", true);
+                        this.getView().getModel("initialvisible").setProperty("/flag1", false);
+                        this.getView().getModel("initialvisible").refresh(true);
+
+                        this.getOwnerComponent().getModel("monthflag").setProperty("/flag", false);
+                        this.getOwnerComponent().getModel("monthflag").setProperty("/flag1", false);
+                        this.getOwnerComponent().getModel("monthflag").refresh(true);
+
+                        this.byId("smartTable").rebindTable();
+                    }
+                    if (sval === 'W') {
+                        this.getView().getModel("initialvisible").setProperty("/flag", false);
+                        this.getView().getModel("initialvisible").setProperty("/flag1", true);
+                        this.getView().getModel("initialvisible").refresh(true);
+
+                        this.getOwnerComponent().getModel("monthflag").setProperty("/flag", false);
+                        this.getOwnerComponent().getModel("monthflag").setProperty("/flag1", true);
+                        this.getOwnerComponent().getModel("monthflag").refresh(true);
+                        this.byId("smartTable1").rebindTable();
+                    }
+                    if (sval === 'M') {
+                        if (this.getView().getModel("LocalModel").getData().month !== null
+                            && this.getView().getModel("LocalModel").getData().month !== ''
+                            && this.getView().getModel("LocalModel").getData().month !== undefined) {
                             this.getView().getModel("initialvisible").setProperty("/flag", false);
                             this.getView().getModel("initialvisible").setProperty("/flag1", true);
                             this.getView().getModel("initialvisible").refresh(true);
+
+                            this.getOwnerComponent().getModel("monthflag").setProperty("/flag", true);
+                            this.getOwnerComponent().getModel("monthflag").setProperty("/flag1", false);
+                            this.getOwnerComponent().getModel("monthflag").refresh(true);
                             this.byId("smartTable1").rebindTable();
-                        } 
-                        if (sval === 'M') {
-                            this.getView().getModel("initialvisible").setProperty("/flag", true);
-                            this.getView().getModel("initialvisible").setProperty("/flag1", false);
-                            this.getView().getModel("initialvisible").refresh(true);
-                            this.byId("smartTable").rebindTable();
-                        } 
-                                
+                        }
+                        else {
+                            sap.m.MessageBox.error("Month is mandatory");
+                            return;
+                        }
+                    }
+
                 },
              getOdata: function (surl, smodelname, ofilter, stype) {
             return new Promise((resolve, reject) => {

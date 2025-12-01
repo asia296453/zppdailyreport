@@ -21,6 +21,8 @@ sap.ui.define([
             this.setModel(new sap.ui.model.json.JSONModel(), "initialvisible");
             this.setModel(new sap.ui.model.json.JSONModel(), "ReportModel");
             this.setModel(new sap.ui.model.json.JSONModel(), "LocalModel");
+            this.setModel(new sap.ui.model.json.JSONModel(), "monthflag");
+            this.setModel(new sap.ui.model.json.JSONModel(), "month");
             // enable routing
             this.getRouter().initialize();
         }

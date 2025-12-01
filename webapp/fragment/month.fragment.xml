@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog multiSelect="true"
+		title="Month"
+		class="sapUiPopupWithPadding"
+		items="{month>/results}"
+		search="handleValueHelpSearchmonth"
+		confirm="handleValueHelpConfmonth"
+		cancel="handleValueHelpClose" growingThreshold="true" growing="true" >
+		<StandardListItem
+			title="{month>key}"
+			description="{month>month}"
+			/>
+	</SelectDialog>
+</core:FragmentDefinition>
