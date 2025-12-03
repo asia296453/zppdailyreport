@@ -23,6 +23,7 @@ sap.ui.define([
 
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Plant","5910");
             this.getOwnerComponent().getModel("LocalModel").setProperty("/Report","O");
+                    this.getOwnerComponent().getModel("LocalModel").setProperty("/Year","");
 
             this.getOwnerComponent().getModel("monthflag").setProperty("/flag", false);
             this.getOwnerComponent().getModel("monthflag").setProperty("/flag1", false);
@@ -45,8 +46,40 @@ sap.ui.define([
                 {"month":"November","key":"11"},
                 {"month":"December","key":"12"}];
             
-            this.getOwnerComponent().getModel("month").setProperty("/results", omonth);
+            this.getOwnerComponent().getModel("month1").setProperty("/results", omonth);
+            this.getOwnerComponent().getModel("month1").refresh(true);
+
+            var slastyear =  new Date(new Date().setFullYear(new Date().getFullYear() - 2));
+            var snext3years = new Date(new Date().setFullYear(new Date().getFullYear() + 2));
+              var omonth1 = [];
+              var okey = [];
+            for (var d = slastyear ; d <= snext3years; d.setDate(d.getDate() + 1)) {
+                    var skey = (d.getMonth()+1)  + '-' + (d.getFullYear());
+                     var selCurrRow1 = okey.filter(function (el) {
+                            return el == skey;
+                        });
+                    if (selCurrRow1.length > 0) {
+                    }else{
+                    if (omonth && omonth.length > 0) {
+                        var selCurrRow = omonth.filter(function (el) {
+                            return el.key == d.getMonth()+1;
+                        });
+                    }
+                    if (selCurrRow.length > 0) {
+                        var sval ={ "month": selCurrRow[0].month +" "+ d.getFullYear() ,
+                                    "key": d
+                        }
+                        omonth1.push(sval);
+                    }
+                    
+                         okey.push(skey);
+                }
+                   
+                }
+               
+                 this.getOwnerComponent().getModel("month").setProperty("/results", omonth1);
             this.getOwnerComponent().getModel("month").refresh(true);
+
         },
         refreshTable: function () {
             this.byId("smartTable").rebindTable();
@@ -164,8 +197,15 @@ sap.ui.define([
                                 var sfilterval = '';
                                 if(oControl.getProperty("value") !== ''){
                                     var ovl = oControl.getProperty("value").split(",");
-                                   for(var i = 0 ; i< ovl.length ; i++){                                    
-                                    aFilters.push(new Filter(oControl.mBindingInfos.value.parts[0].path.split("/")[1], FilterOperator.EQ, ovl[i].trim()));
+                                   for(var i = 0 ; i< ovl.length ; i++){           
+                                    if(oControl.mBindingInfos.value.parts[0].path.split("/")[1] === 'month'){
+                                        aFilters.push(new Filter("month", FilterOperator.BT, ovl[i].trim().split(" ")[0],ovl[i].trim().split(" ")[1]));
+                                        // aFilters.push(new Filter("year", FilterOperator.EQ, ovl[i].trim().split(" ")[1]));
+                                    }   
+                                    else{
+                                        aFilters.push(new Filter(oControl.mBindingInfos.value.parts[0].path.split("/")[1], FilterOperator.EQ, ovl[i].trim()));
+                                    }                      
+                                    
                                    }
                                 } 
                                 break;
@@ -204,12 +244,17 @@ sap.ui.define([
                                 break;
                         }
                     });
+                    this.getOwnerComponent().getModel("LocalModel").setProperty("/Plant","5910");
+                    this.getOwnerComponent().getModel("LocalModel").setProperty("/Report","O");
+                    this.getOwnerComponent().getModel("LocalModel").refresh();
                 },
 
         onBeforeRebindTable1: function (oEvent) {
             var oBindingParams = oEvent.getParameter("bindingParams");
             var aFilters = this.buildFiltersForCustomFields();
+            debugger;
             var aStandardFilters = oBindingParams.filters;
+            aFilters = aFilters.concat(aStandardFilters);
             oBindingParams.filters = aFilters;
 
         },
@@ -218,6 +263,8 @@ sap.ui.define([
             var oBindingParams = oEvent.getParameter("bindingParams");
             var aFilters = this.buildFiltersForCustomFields();
             var aStandardFilters = oBindingParams.filters;
+            debugger;
+            aFilters = aFilters.concat(aStandardFilters)
             oBindingParams.filters = aFilters;
 
         // var oBindingParams = oEvent.getParameter("bindingParams");
@@ -259,7 +306,7 @@ sap.ui.define([
                  aCols = this.createColumnConfigW();
             }
             aData = res;
-            debugger;
+            
             var sid = this.getView().byId("customSelect").getSelectedItem().getProperty("text");
             oSettings = {
                 workbook: {
@@ -355,7 +402,11 @@ sap.ui.define([
                     var oFilter = new Filter("Zweek", sap.ui.model.FilterOperator.EQ, sValue);
                     evt.getSource().getBinding("items").filter([oFilter]);
                 },
-
+           handleValueHelpSearchmonth: function (evt) { 
+          var sValue = evt.getParameter("value");
+           var oFilter = new Filter("month", sap.ui.model.FilterOperator.Contains, sValue);
+           evt.getSource().getBinding("items").filter([oFilter]);
+           },
         handleValueHelpConfPlantF4: function (evt) {
                     var aContexts = evt.getParameter("selectedContexts");
                     if (aContexts && aContexts.length) {
@@ -371,15 +422,25 @@ sap.ui.define([
 
 
                 handleValueHelpConfmonth: function (evt) {
+                    var omnth = this.getOwnerComponent().getModel("month1").getData().results;
                     var aContexts = evt.getParameter("selectedContexts");
                     if (aContexts && aContexts.length) {
                         var oval = aContexts.map(function (oContext) {
-                            return oContext.getObject().key;
+                            var smonth = oContext.getObject().month.split(" ");
+                            if (omnth && omnth.length > 0) {
+                                var selCurrRow1 = omnth.filter(function (el) {
+                                    return el.month == smonth[0];
+                                });
+                            }
+                            if (selCurrRow1.length > 0) {
+                                var sval = selCurrRow1[0].key +" "+ smonth[1];
+                            }
+                            return sval;
                         }).join(", ");
                        
-                        this.getView().getModel("LocalModel").setProperty("/month", oval);
-                        this.getView().getModel("LocalModel").refresh(true);
                     }
+                    this.getView().getModel("LocalModel").setProperty("/month", oval);
+                        this.getView().getModel("LocalModel").refresh(true);
                     evt.getSource().getBinding("items").filter([]);
                 },
          handleValueHelpConfMaterial: function (evt) {
@@ -444,7 +505,6 @@ sap.ui.define([
 
                 onSearch: function (oEvent) { // Fetch a list of filters to apply to the worklist:
                     var sval = this.getOwnerComponent().getModel("LocalModel").getProperty("/Report");
-                    debugger;
                     if (sval === 'O') {
                         this.getView().getModel("initialvisible").setProperty("/flag", true);
                         this.getView().getModel("initialvisible").setProperty("/flag1", false);

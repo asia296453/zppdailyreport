@@ -9,7 +9,7 @@
 		confirm="handleValueHelpConfmonth"
 		cancel="handleValueHelpClose" growingThreshold="true" growing="true" >
 		<StandardListItem
-			title="{month>key}"
+			title="{month>month}"
 			description="{month>month}"
 			/>
 	</SelectDialog>

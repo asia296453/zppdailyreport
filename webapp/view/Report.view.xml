@@ -10,7 +10,7 @@
 	<Page id="page" title="{i18n>title}" enableScrolling="true">
 	 <content>
         <ScrollContainer vertical="true">
-   	<VBox fitContainer="true">
+   	<!-- <VBox fitContainer="true"> -->
 	<fb:FilterBar id="fbPreqs" search="onSearch" showRestoreButton="true" showClearButton="true" showClearOnFB="true"
 						clear="onClearFilterBar" class="sapUiSizeCompact">
 						<fb:filterGroupItems>
@@ -37,6 +37,7 @@
         <MultiInput value="{LocalModel>/month}"  showValueHelp="true" valueHelpRequest="onOpenmonth" valueHelpOnly="true"/>
 </fb:control>
 </fb:FilterGroupItem>
+
 
 <fb:FilterGroupItem name="Report" label="Report Type" groupName="default" visibleInFilterBar="true">
     <fb:control>
@@ -608,7 +609,7 @@ entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant"
 					
 				</t:Table>
 				</st:SmartTable> -->
-	</VBox>
+	<!-- </VBox> -->
 	</ScrollContainer>
     </content>
     </Page>
