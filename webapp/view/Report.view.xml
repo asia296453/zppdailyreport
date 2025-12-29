@@ -245,7 +245,7 @@ entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant"
 			entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant" persistencyKey="zfleetadmindash.table"
 				showRowCount="true" 
 				beforeRebindTable="onBeforeRebindTable1"  placeToolbarInTable="true"
-				initiallyVisibleFields="week1,month,lotsize,actmixed,actfilled,schvsfilled,uhtlosslitrs,prdlosslitrs"
+				initiallyVisibleFields="week1,month,year,lotsize,actmixed,actfilled,schvsfilled,uhtlosslitrs,prdlosslitrs"
 				ignoreFromPersonalisation="Plant,Material,Week,Report,week2,weekdays,shoporder,product,prdcategory,size,prodsch,suppwastg,caseprd,mixvsact,proccplant,prdcycle,runningblock,uhtlossperc,prdlossperc,recepielosslitrs,recepielossperc,totallosslitrs,totallossperc,remarks"
 				requestAtLeastFields="" class="sapUiResponsiveContentPadding"
 				tableType="ResponsiveTable" demandPopin="true" enableAutoColumnWidth="true" 
@@ -275,42 +275,49 @@ entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant"
 
 					<Column  >
 					<customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "lotsize", "columnIndex":3, "leadingProperty": "lotsize" , "sortProperty": "lotsize" , "filterProperty": "lotsize"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "year", "columnIndex":3, "leadingProperty": "year" , "sortProperty": "year" , "filterProperty": "year"}' />  
+					</customData>  
+					<Text text="year"/>  
+					</Column>
+
+					<Column  >
+					<customData>  
+					<core:CustomData key="p13nData" value='\{"columnKey": "lotsize", "columnIndex":4, "leadingProperty": "lotsize" , "sortProperty": "lotsize" , "filterProperty": "lotsize"}' />  
 					</customData>  
 					<Text text="IFS Lot size" wrapping="true"/>  
 					</Column>
 					
 					<Column   >
 					<customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "actmixed", "columnIndex":4, "leadingProperty": "actmixed" , "sortProperty": "actmixed" , "filterProperty": "actmixed"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "actmixed", "columnIndex":5, "leadingProperty": "actmixed" , "sortProperty": "actmixed" , "filterProperty": "actmixed"}' />  
 					</customData>  
 					<Text text="Actual Mixed Ltrs" wrapping="true"/>  
 					</Column>
 
 					<Column   >
 					<customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "actfilled", "columnIndex":5, "leadingProperty": "actfilled" , "sortProperty": "actfilled" , "filterProperty": "actfilled"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "actfilled", "columnIndex":6, "leadingProperty": "actfilled" , "sortProperty": "actfilled" , "filterProperty": "actfilled"}' />  
 					</customData>  
 					<Text text="Actual Filled Ltrs" wrapping="true"/>  
 					</Column>
 					
 					<Column >
 					<customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "schvsfilled", "columnIndex":6, "leadingProperty": "schvsfilled" , "sortProperty": "schvsfilled" , "filterProperty": "schvsfilled"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "schvsfilled", "columnIndex":7, "leadingProperty": "schvsfilled" , "sortProperty": "schvsfilled" , "filterProperty": "schvsfilled"}' />  
 					</customData>  
 					<Text text="% Schedule VS Filled" wrapping="true"/>  
 					</Column>
 					
 					<Column  >
 					<customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "uhtlosslitrs", "columnIndex":7, "leadingProperty": "uhtlosslitrs" , "sortProperty": "uhtlosslitrs" , "filterProperty": "uhtlosslitrs"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "uhtlosslitrs", "columnIndex":8, "leadingProperty": "uhtlosslitrs" , "sortProperty": "uhtlosslitrs" , "filterProperty": "uhtlosslitrs"}' />  
 					</customData>  
 					<Text text="UHT LOSS, liters" wrapping="true"/>  
 					</Column>
 
 					<Column    >
 					<customData>  
-					<core:CustomData key="p13nData" value='\{"columnKey": "prdlosslitrs", "columnIndex":8, "leadingProperty": "prdlosslitrs" , "sortProperty": "prdlosslitrs" , "filterProperty": "prdlosslitrs"}' />  
+					<core:CustomData key="p13nData" value='\{"columnKey": "prdlosslitrs", "columnIndex":9, "leadingProperty": "prdlosslitrs" , "sortProperty": "prdlosslitrs" , "filterProperty": "prdlosslitrs"}' />  
 					</customData>  
 					<Text text="Production loss, liters" wrapping="true"/>  
 					</Column>
@@ -319,6 +326,7 @@ entitySet="HeaderSet" smartFilterId="smartFilterBar" smartVariant="smartVariant"
 						<ColumnListItem>
 						<Text text="{path: 'week1'}" visible="{monthflag>/flag1}"/>
 						<Text text="{path: 'month'}" visible="{monthflag>/flag}"/>
+						<Text text="{path: 'year'}" />
 						<Text text="{path: 'lotsize'}" />
 						<Text text="{path: 'actmixed'}" />
 						<Text text="{path: 'actfilled'}" />

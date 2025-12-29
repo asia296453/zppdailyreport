@@ -11,7 +11,7 @@
 		<StandardListItem
 			title="{Zweek}"
 		    description="{Zyear}" 
-			info="{Zdatefr} - {Zdateto}"
+			info="{path: 'Zdatefr', formatter: '.formatDate'} - {path: 'Zdateto', formatter: '.formatDate'}"
 			/>
 	</SelectDialog>
 </core:FragmentDefinition>

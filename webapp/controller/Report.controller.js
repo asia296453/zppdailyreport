@@ -32,6 +32,20 @@ sap.ui.define([
             // this.getOwnerComponent().getModel("LocalModel").setProperty("/Material","20000002");
             // this.getOwnerComponent().getModel("LocalModel").setProperty("/Week","28");
         },
+        formatDate: function (dt) {
+			if (dt === undefined || dt === null || dt === "") {
+				return;
+			}
+			var date = new Date(dt),
+				month = '' + (dt.getMonth() + 1),
+				day = '' + dt.getDate(),
+				year = dt.getFullYear();
+			if (month.length < 2)
+				month = '0' + month;
+			if (day.length < 2)
+				day = '0' + day;
+			return [day, month, year].join('.');
+		},
         setmonth:function(){
             var omonth = [{"month":"January","key":"01"},
                 {"month":"February","key":"02"},
