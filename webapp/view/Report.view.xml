@@ -10,7 +10,7 @@
 	<Page id="page" title="{i18n>title}" enableScrolling="true">
 	 <content>
         <ScrollContainer vertical="true">
-   	<!-- <VBox fitContainer="true"> -->
+
 	<fb:FilterBar id="fbPreqs" search="onSearch" showRestoreButton="true" showClearButton="true" showClearOnFB="true"
 						clear="onClearFilterBar" class="sapUiSizeCompact">
 						<fb:filterGroupItems>
